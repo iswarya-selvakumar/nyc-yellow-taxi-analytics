@@ -123,7 +123,7 @@ Silver Job
 
 This ensures that the catalog is automatically updated after ETL processing.
 
-![workflow](screenshots/workflow_orchestration.png)
+![workflow Orchestration](screenshots/workflow_orchestration.png)
 
 ## Analytics Queries
 
