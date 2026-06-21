@@ -192,7 +192,7 @@ Through this project I gained hands-on experience with:
 * Athena Query Optimization
 * Workflow Orchestration
 * Business Intelligence Dashboard Development
-
+  
 ## Project Highlights
 
 - Processed 24.08M raw records using PySpark on AWS Glue.
