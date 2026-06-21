@@ -1,117 +1,121 @@
 # nyc-yellow-taxi-analytics
 End-to-end AWS Data Engineering project using NYC Yellow Taxi data with S3, AWS Glue, PySpark, Athena, and Power BI. Processed 24.08M trip records, applied data quality checks, built a star schema, and delivered business insights through interactive dashboards.
 
-## Overview
+## Project Overview
 
-This project demonstrates an end-to-end AWS Data Engineering pipeline built using the NYC TLC Yellow Taxi dataset. The solution follows a Medallion Architecture (Raw → Silver → Gold) to ingest, transform, validate, and analyze large-scale taxi trip data.
+This project demonstrates an end-to-end Data Engineering pipeline built on AWS using the NYC TLC Yellow Taxi dataset. The solution follows the Medallion Architecture (Raw → Silver → Gold) and processes large-scale taxi trip data using PySpark on AWS Glue.
 
-The project processes over 24 million taxi trip records using AWS Glue and PySpark, performs data quality validations, builds a dimensional model for analytics, and delivers business insights through Amazon Athena and Power BI dashboards.
+The pipeline performs data quality validation, transforms raw trip records into curated analytical datasets, builds a dimensional model (Star Schema), and enables business reporting through Amazon Athena and Power BI.
 
----
+## Business Objective
 
-## Project Statistics
+The objective of this project is to transform raw NYC taxi trip data into a structured analytical platform that supports:
 
-| Metric                 | Value                    |
-| ---------------------- | ------------------------ |
-| Dataset                | NYC TLC Yellow Taxi Data |
-| Analysis Period        | Jan 2025 – Jun 2025      |
-| Raw Records Processed  | 24,083,384               |
-| Valid Records          | 22,020,272               |
-| Rejected Records       | 2,063,112                |
-| Rejection Rate         | 8.57%                    |
-| Total Revenue Analyzed | $621.20M                 |
+* Revenue analysis
+* Trip volume analysis
+* Payment method analysis
+* Vendor performance analysis
+* Location-based insights
+* Dashboard reporting and business intelligence
 
----
+## Dataset
+
+Source: NYC TLC Yellow Taxi Trip Records
+
+Analysis Period: January 2025 – June 2025
+
+### Data Volume
+
+| Metric           | Value      |
+| ---------------- | ---------- |
+| Raw Records      | 24,083,384 |
+| Valid Records    | 22,020,272 |
+| Rejected Records | 2,063,112  |
+| Rejection Rate   | 8.57%      |
 
 ## Architecture
 
-![Architecture Diagram](architecture/architecture_diagram.png)
+The solution follows a Medallion Architecture:
 
----
+NYC TLC Dataset
+→ Amazon S3 (Raw Layer)
+→ AWS Glue + PySpark (Silver ETL)
+→ Silver Layer
+→ AWS Glue + PySpark (Gold ETL)
+→ Gold Layer (Star Schema)
+→ AWS Glue Crawler
+→ AWS Glue Catalog
+→ Amazon Athena
+→ Power BI Dashboard
 
-## Technology Stack
+![Architecture Diagram](architecture/Architecture_diagram.png)
 
-### AWS Services
+## Technologies Used
 
 * Amazon S3
 * AWS Glue
-* AWS Glue Data Catalog
-* Amazon Athena
-
-### Data Processing
-
 * PySpark
-* Parquet
-
-### Analytics & Visualization
-
-* SQL
+* AWS Glue Catalog
+* AWS Glue Workflows
+* Amazon Athena
 * Power BI
+* Parquet File Format
 
----
+## Silver Layer Processing
 
-## Medallion Architecture
+The Silver layer performs data cleansing and validation.
 
-### Raw Layer
+### Data Quality Checks
 
-* NYC TLC Yellow Taxi source data stored in Amazon S3
-* Original parquet files
-* No transformations applied
+* Null value handling
+* Invalid trip distance removal
+* Invalid fare amount removal
+* Pickup/Dropoff timestamp validation
+* Data quality flag generation
 
-### Silver Layer
+### Transformations
 
-Data quality validations:
+* Pickup date extraction
+* Pickup year extraction
+* Pickup month extraction
+* Trip duration calculation
+* Partitioning by year and month
 
-* Null handling
-* Invalid fare removal
-* Invalid distance removal
-* Timestamp validation
-* Filtering for Jan–Jun 2025
+## Gold Layer Processing
 
-Additional transformations:
+The Gold layer transforms curated data into a dimensional model for analytics.
 
-* pickup_date
-* pickup_year
-* pickup_month
-* trip_duration_minutes
-
-### Gold Layer
-
-Star schema model created for analytics.
-
-#### Fact Table
+### Fact Table
 
 * fact_trip
 
-#### Dimension Tables
+### Dimension Tables
 
-* dim_payment
+* dim_date
 * dim_vendor
+* dim_payment
 * dim_ratecode
 * dim_location
-* dim_date
 
----
+### Modeling Approach
 
-## Data Quality Results
+Star Schema
 
-| Metric           |      Count |
-| ---------------- | ---------: |
-| Raw Records      | 24,083,384 |
-| Valid Records    | 22,020,272 |
-| Rejected Records |  2,063,112 |
+## Workflow Orchestration
 
-Validation Rules:
+AWS Glue Workflow orchestrates the pipeline execution:
 
-* trip_distance > 0
-* fare_amount > 0
-* dropoff_time > pickup_time
+Silver Job
+→ Gold Job
+→ Glue Crawler
 
----
+This ensures that the catalog is automatically updated after ETL processing.
 
-## Athena Analytics
+![workflow](screenshots/workflow_orchestration.png)
 
-Implemented analytical queries including:
+## Analytics Queries
+
+The following analytical queries were developed in Amazon Athena:
 
 1. Monthly Revenue Trend
 2. Monthly Trip Volume
@@ -120,62 +124,46 @@ Implemented analytical queries including:
 5. Payment Method Distribution
 6. Revenue by Payment Type
 7. Top 10 Pickup Locations
-8. Top 10 Revenue-Generating Pickup Zones
+8. Top 10 Revenue Generating Pickup Zones
 9. Vendor Performance
 10. Average Tip by Payment Type
 
----
+## Dashboard KPIs
 
-## Power BI Dashboard
+* Total Revenue: $621.20M
+* Total Trips: 22.02M
+* Average Trip Duration: 16.69 Minutes
+* Average Trip Distance: 6.52 Miles
+
+## Dashboard Pages
 
 ### Executive Overview
 
-* Total Revenue
-* Total Trips
-* Average Trip Distance
-* Average Trip Duration
-* Monthly Revenue Trend
-* Monthly Trip Volume
+* Revenue Trend
+* Trip Volume Trend
+* KPI Cards
 * Payment Method Distribution
+
+![Executive Overview](screenshots/dashboard_page1.png)
 
 ### Operational Analysis
 
-* Revenue by Payment Type
-* Average Tip by Payment Type
 * Vendor Performance
-* Top 10 Pickup Locations
+* Revenue by Payment Type
+* Top Pickup Locations
 * Top Revenue Generating Zones
 
----
+![Operational Analysis](screenshots/dashboard_page2.png)
 
-## Key Insights
+## Key Learnings
 
-* Generated $621.20M revenue during the analysis period.
-* Processed 24.08M taxi trip records.
-* Removed 2.06M invalid records through data quality validation.
-* Built a scalable star schema model for analytics.
-* Delivered business insights using Athena and Power BI.
+Through this project I gained hands-on experience with:
 
----
-
-## Repository Structure
-
-```text
-nyc-yellow-taxi-analytics/
-│
-├── README.md
-├── architecture/
-├── dashboards/
-├── screenshots/
-├── sql query results/
-└── glue_jobs/
-```
-
----
-
-## Author
-
-**Iswarya Selvakumar**
-
-AWS | PySpark | SQL | Power BI | Data Engineering
-
+* Data Lake Architecture
+* AWS Glue ETL Development
+* PySpark Transformations
+* Data Quality Framework Design
+* Star Schema Modeling
+* Athena Query Optimization
+* Workflow Orchestration
+* Business Intelligence Dashboard Development
