@@ -1,11 +1,24 @@
 # nyc-yellow-taxi-analytics
-End-to-end AWS Data Engineering project using NYC Yellow Taxi data with S3, AWS Glue, PySpark, Athena, and Power BI. Processed 24.08M trip records, applied data quality checks, built a star schema, and delivered business insights through interactive dashboards.
+
+Built an end-to-end AWS Data Engineering pipeline using S3, AWS Glue, PySpark, Athena, and Power BI. Processed 24.08M NYC taxi trip records, implemented data quality validation, designed a Star Schema, automated workflow orchestration, and delivered business insights through interactive dashboards.
 
 ## Project Overview
 
 This project demonstrates an end-to-end Data Engineering pipeline built on AWS using the NYC TLC Yellow Taxi dataset. The solution follows the Medallion Architecture (Raw → Silver → Gold) and processes large-scale taxi trip data using PySpark on AWS Glue.
 
 The pipeline performs data quality validation, transforms raw trip records into curated analytical datasets, builds a dimensional model (Star Schema), and enables business reporting through Amazon Athena and Power BI.
+
+## Technology Stack
+
+| Layer | Technology |
+|---------|------------|
+| Storage | Amazon S3 |
+| Processing | AWS Glue, PySpark |
+| Data Catalog | AWS Glue Catalog |
+| Orchestration | AWS Glue Workflows |
+| Query Engine | Amazon Athena |
+| Visualization | Power BI |
+| File Format | Parquet |
 
 ## Business Objective
 
@@ -35,31 +48,9 @@ Analysis Period: January 2025 – June 2025
 
 ## Architecture
 
-The solution follows a Medallion Architecture:
-
-NYC TLC Dataset
-→ Amazon S3 (Raw Layer)
-→ AWS Glue + PySpark (Silver ETL)
-→ Silver Layer
-→ AWS Glue + PySpark (Gold ETL)
-→ Gold Layer (Star Schema)
-→ AWS Glue Crawler
-→ AWS Glue Catalog
-→ Amazon Athena
-→ Power BI Dashboard
-
 ![Architecture Diagram](architecture/Architecture_diagram.png)
 
-## Technologies Used
-
-* Amazon S3
-* AWS Glue
-* PySpark
-* AWS Glue Catalog
-* AWS Glue Workflows
-* Amazon Athena
-* Power BI
-* Parquet File Format
+The solution implements a Medallion Architecture (Raw → Silver → Gold) using AWS services for scalable data processing, analytics, and reporting.
 
 ## Silver Layer Processing
 
@@ -101,6 +92,27 @@ The Gold layer transforms curated data into a dimensional model for analytics.
 
 Star Schema
 
+## Project Structure
+
+```text
+nyc-yellow-taxi-analytics/
+│
+├── README.md
+├── architecture/
+│   └── Architecture_diagram.png
+├── glue_jobs/
+│   ├── silver_etl.py
+│   └── gold_etl.py
+├── athena_queries/
+│   └── analytics_queries.csv
+├── dashboards/
+│   └── nyc_taxi_dashboard.pbix
+└── screenshots/
+    ├── workflow_orchestration.png
+    ├── dashboard_page1.png
+    └── dashboard_page2.png
+```
+
 ## Workflow Orchestration
 
 AWS Glue Workflow orchestrates the pipeline execution:
@@ -127,6 +139,10 @@ The following analytical queries were developed in Amazon Athena:
 8. Top 10 Revenue Generating Pickup Zones
 9. Vendor Performance
 10. Average Tip by Payment Type
+
+## Power BI Dashboard
+
+The final analytics layer is visualized using Power BI dashboards that provide executive and operational insights.
 
 ## Dashboard KPIs
 
@@ -155,6 +171,15 @@ The following analytical queries were developed in Amazon Athena:
 
 ![Operational Analysis](screenshots/dashboard_page2.png)
 
+## Key Insights
+
+- Generated $621.20M in revenue during Jan–Jun 2025.
+- Processed 22.02M valid taxi trips.
+- Credit Card was the dominant payment method.
+- JFK Airport and Midtown areas generated the highest revenue.
+- Average trip duration was 16.69 minutes.
+- Average trip distance was 6.52 miles.
+
 ## Key Learnings
 
 Through this project I gained hands-on experience with:
@@ -167,3 +192,12 @@ Through this project I gained hands-on experience with:
 * Athena Query Optimization
 * Workflow Orchestration
 * Business Intelligence Dashboard Development
+
+## Project Highlights
+
+- Processed 24.08M raw records using PySpark on AWS Glue.
+- Removed 2.06M invalid records through data quality validation.
+- Designed and implemented a Star Schema with 1 fact table and 5 dimension tables.
+- Automated ETL execution using AWS Glue Workflows.
+- Queried analytical datasets using Amazon Athena.
+- Built interactive Power BI dashboards for business reporting.
